@@ -1,5 +1,7 @@
 # Cars API
 
+Sample Spring Boot REST API Project with Test Cases 
+
 ## Getting Started
 
 ### Prerequisites
