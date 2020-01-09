@@ -72,10 +72,12 @@ Let us start by creating our database and configuring our API to use it. Follow 
 
 Once ready, let us create our database as follows:
 
+```
 $ mysql -u root -p
 
 mysql> CREATE DATABASE cars_database;
 Query OK, 1 row affected (0.08 sec)
+```
 
 Some details of our service will be different from environment to environment. For example, the database we use during development will not be the same one that the end users will use to store their information.
 
@@ -85,21 +87,25 @@ To enable our JPA dependency to access and modify our database, we modify the co
 
 #### Database Properties
 
+```
 spring.datasource.url = jdbc:mysql://localhost:3306/cars_database?useSSL=false
 
 spring.datasource.username = root
 
 spring.datasource.password = password
+```
 
 #### Hibernate Properties
 
 The SQL dialect makes Hibernate generate better SQL for the chosen database
 
+```
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
 
 Hibernate ddl auto (create, create-drop, validate, update)
 
 spring.jpa.hibernate.ddl-auto = update
+```
 
 We now need an entity class to define our API's resources and their details as they will be saved in our database. A Car is our resource on this API and what this means is that it represents our object or real life item whose information we will perform actions on. Such actions include Create, Read, Update, and Delete, simply put as CRUD operations.
 
@@ -119,6 +125,7 @@ The other folders to be added include a controllers folder that contains our con
 
 Let us define our Car class in the models folder:
 
+```
 /**
 * This class will represent our car and its attributes
 */
@@ -139,6 +146,7 @@ public class Car {
 
     // getters and setters
 }
+```
 
 Note: I have stripped off the imports to make the code snippet shorter. Please refer to the Github repo attached at the end of the article for the full code.
 
@@ -146,7 +154,10 @@ Note: I have stripped off the imports to make the code snippet shorter. Please r
 
 With our car model ready, let us now create the CarRepository file that will be used in the interaction with the database:
 
+```
 public interface CarRepository extends JpaRepository<Car, Long> { }
+
+```
 
 ### Writing Tests
 
@@ -154,7 +165,7 @@ We can now expose the functionality of our API through our controller, but in th
 
 // These are a subset of the tests, the full test file is available on the Github repo attached at the end of this article
 ....
-
+```
     /**
      * Here we test that we can get all the cars in the database
      * using the GET method
@@ -209,7 +220,8 @@ We can now expose the functionality of our API through our controller, but in th
         Car updatedCar = restTemplate.getForObject(getRootUrl() + "/cars/" + id, Car.class);
         Assert.assertNotNull(updatedCar);
     }
-    
+  ```
+  
 The tests simulate various actions that are possible on our API and this is our way of verifying that the API works as expected. If a change was to made tomorrow, the tests will help determine if any of the functionality of the API is broken and in doing so prevent us from breaking functionality when effecting changes.
 
 Think of tests as a shopping list when going into the supermarket. Without it, we might end up picking almost everything we come across that we think might be useful. It might take us a long time to get everything we need. If we had a shopping list, we would be able to buy exactly what we need and finish shopping faster. Tests do the same for our APIs, they help us define the scope of the API so that we do not implement functionality that was not in the plans or not needed.
@@ -224,6 +236,7 @@ TDD is an iterative process of writing tests and implementing the functionality 
 
 Let us now implement our API functionality in a CarController which goes into the controllers folder:
 
+```
 @RestController
 @RequestMapping("/api/v1")
 public class CarController {
@@ -283,6 +296,7 @@ public class CarController {
         return response;
     }
 }
+```
 
 At the top, we have the @RestController annotation to define our CarController class as the controller for our Spring Boot API. What follows is the @RequestMapping where we specify the base path of our API URL as /api/v1. This also includes the version.
 
@@ -292,7 +306,10 @@ Earlier, we learned about the Create, Read, Update, and Delete operations in an 
 
 We can also have a single endpoint that handles various HTTP Methods:
 
+```
 @RequestMapping(value="/cars", method = { RequestMethod.GET, RequestMethod.POST })
+```
+
 Now that we have implemented the functionality, let us run our tests:
 
 ### Test results
@@ -318,7 +335,7 @@ Format: ![Alt Text](https://i.ibb.co/RjFyqGs/test3.png)
 
 These are the cars we have created using our Spring Boot API. A quick check on the database returns the same list:
 
-![Test Result 4](/images/test-result-4.png)
+![TDatabase MySQL](/images/test-result-4.png)
 Format: ![Alt Text](https://i.ibb.co/N3qf3y8/test4.png)
 
 ### Swagger UI
@@ -327,6 +344,7 @@ We have built and tested our API using TDD and now to make our API better, we ar
 
 First, let us add the following dependencies in our pom.xml:
 
+```
 <dependency>
   <groupId>io.springfox</groupId>
   <artifactId>springfox-swagger2</artifactId>
@@ -338,10 +356,13 @@ First, let us add the following dependencies in our pom.xml:
   <artifactId>springfox-swagger-ui</artifactId>
   <version>2.7.0</version>
 </dependency>
+```
+
 Next, we will create a SwaggerConfig.java in the same folder as CarsApplication.java, which is the entry point to our API.
 
 The SwaggerConfig.java file allows to also add some information about our API:
 
+```
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -367,18 +388,28 @@ public class SwaggerConfig {
             .build();
     }
 }
+```
 
 Now we annotate our endpoints so that they appear on the Swagger UI interface that will be generated. This is achieved as follows:
 
 // Add this import in our controller file...
+
+```
 import io.swagger.annotations.ApiOperation;
+```
 
 // ...then annotate our HTTP Methods
+
+```
 @ApiOperation(value="Fetches all cars in the database", response=Car.class)
 @PostMapping("/...") // Our endpoint
+```
+
 We have specified our response class as the Car class since it is the one that will be used to populate the details of our responses. We have done this because Swagger UI allows us to add information about the request payloads and response details. This will help provide more information about the payloads such as the kind of values that our API requires and the kind of response that will be returned. We can also specify mandatory fields in the documentation.
 
 In our case, we will also be using the Car class to format and validate our request parameters. Therefore, we annotate its "getters" as follows:
+
+```
 
     @ApiModelProperty(name="id",
                       value="The id of the car",
@@ -402,6 +433,7 @@ In our case, we will also be using the Car class to format and validate our requ
     public int getDoors() {
         return doors;
     }
+ ```
     
 That's it! Our documentation is ready. When we run our API using mvn spring-boot:run and navigate to http://localhost:8080/swagger-ui.html we can see our API's documentation:
 
