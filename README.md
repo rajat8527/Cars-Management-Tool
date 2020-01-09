@@ -1,6 +1,6 @@
 # Spring Boot Test Driven Development (Cars API)
 
-Sample Spring Boot REST API Project with Test Cases 
+Spring Boot Test Driven Development (REST API Project with Test Cases)
 
 ## Getting Started
 
@@ -442,7 +442,7 @@ Format: ![Alt Text](https://i.ibb.co/3SvNrLz/swagger1.png)
 
 Swagger UI has documented all our endpoints and even provided functionality to interact with our API directly from the documentation. As can be seen on the lower right section of the screenshot, our example values have been pre-filled so that we can quickly test out the API without having to rewrite the values.
 
-### Conclusion
+## Conclusion
 
 Java is a powerful language and we have harnessed its power to build an Application Programming Interface, or API, using the Spring Boot framework. We have been able to implement four of the HTTP Methods to handle the various Create, Read, Update and Delete operations on the details about our cars.
 
