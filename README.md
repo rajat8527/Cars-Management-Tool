@@ -338,7 +338,6 @@ At the top, we have the @RestController annotation to define our CarController c
 
 Versioning is good practice in an API to enhance backward compatibility. If the functionality changes and we already have other people consuming our APIs, we can create a new version and have them both running concurrently to give them ample time to migrate to the new API.
 
-
 Earlier, we learned about the Create, Read, Update, and Delete operations in an API and how they are mapped to HTTP Methods. These methods are accommodated in the Spring framework as PostMapping, GetMapping, PutMapping and DeleteMapping annotations, respectively. Each of these annotations helps us expose endpoints that only perform the CRUD operation specified.
 
 We can also have a single endpoint that handles various HTTP Methods:
@@ -353,6 +352,113 @@ The passing tests show us that we have implemented the functionality as desired 
 Let us interact with our API via Postman, which is a tool that helps interact with APIs when developing or consuming them.
 
 We start by fetching all the cars we have stored in our database:
+
+We start by fetching all the cars we have stored in our database:
+
+Get cars empty
+At the start, we have no cars stored. Let us add our first car:
+
+Post first car
+The response is the id and details of the car we have just added. If we add some more cars and fetch all the cars we have saved:
+
+Get all cars
+These are the cars we have created using our Spring Boot API. A quick check on the database returns the same list:
+
+Database all cars
+
+### Swagger UI
+
+We have built and tested our API using TDD and now to make our API better, we are going to document it using Swagger UI, which allows us to create an auto-generated interface for other users to interact with and learn about our API.
+
+First, let us add the following dependencies in our pom.xml:
+
+<dependency>
+  <groupId>io.springfox</groupId>
+  <artifactId>springfox-swagger2</artifactId>
+  <version>2.7.0</version>
+</dependency>
+
+<dependency>
+  <groupId>io.springfox</groupId>
+  <artifactId>springfox-swagger-ui</artifactId>
+  <version>2.7.0</version>
+</dependency>
+Next, we will create a SwaggerConfig.java in the same folder as CarsApplication.java, which is the entry point to our API.
+
+The SwaggerConfig.java file allows to also add some information about our API:
+
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.example.cars"))
+            .paths(PathSelectors.any())
+            .build()
+            .apiInfo(metadata());
+    }
+
+    /**
+     * Adds metadata to Swagger
+     *
+     * @return
+     */
+    private ApiInfo metadata() {
+        return new ApiInfoBuilder()
+            .title("Cars API")
+            .description("An API to store car details built using Spring Boot")
+            .build();
+    }
+}
+
+Now we annotate our endpoints so that they appear on the Swagger UI interface that will be generated. This is achieved as follows:
+
+// Add this import in our controller file...
+import io.swagger.annotations.ApiOperation;
+
+// ...then annotate our HTTP Methods
+@ApiOperation(value="Fetches all cars in the database", response=Car.class)
+@PostMapping("/...") // Our endpoint
+We have specified our response class as the Car class since it is the one that will be used to populate the details of our responses. We have done this because Swagger UI allows us to add information about the request payloads and response details. This will help provide more information about the payloads such as the kind of values that our API requires and the kind of response that will be returned. We can also specify mandatory fields in the documentation.
+
+In our case, we will also be using the Car class to format and validate our request parameters. Therefore, we annotate its "getters" as follows:
+
+    @ApiModelProperty(name="id",
+                      value="The id of the car",
+                      example="1")
+    public long getId() {
+        return id;
+    }
+
+    @ApiModelProperty(name="carName",
+                      value="The name of the car to be saved",
+                      example="Bugatti",
+                      required=true)
+    public String getCarName() {
+        return carName;
+    }
+
+    @ApiModelProperty(name="doors",
+                      value="The number of doors that the car has",
+                      example="2",
+                      required=true)
+    public int getDoors() {
+        return doors;
+    }
+    
+That's it! Our documentation is ready. When we run our API using mvn spring-boot:run and navigate to http://localhost:8080/swagger-ui.html we can see our API's documentation:
+
+### Swagger UI final
+
+Swagger UI has documented all our endpoints and even provided functionality to interact with our API directly from the documentation. As can be seen on the lower right section of the screenshot, our example values have been pre-filled so that we can quickly test out the API without having to rewrite the values.
+
+### Conclusion
+
+Java is a powerful language and we have harnessed its power to build an Application Programming Interface, or API, using the Spring Boot framework. We have been able to implement four of the HTTP Methods to handle the various Create, Read, Update and Delete operations on the details about our cars.
+
+Swagger UI has also enabled us to document our API in a simple yet verbose and manner and have this documentation exposed as an endpoint in our service. Having noted the advantages of Test-Driven development, we went ahead and wrote tests for our endpoints and made sure our functionality and tests are aligned.
 
 ## Contribution
 
