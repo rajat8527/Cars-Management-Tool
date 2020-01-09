@@ -50,7 +50,8 @@ Our journey starts at the Spring Initializer tool that helps us quickly bootstra
 
 This is aimed at easing our development process and letting us direct our attention to the logic of our application:
 
-Spring Initializr
+### Spring Initializr
+
 The tool allows us to choose between Maven and Gradle, which are tools to helps us automate some aspects of our build workflow such us testing, running, and packaging our Java application. We also get the option to choose between using Java or Kotlin when building our API using Spring Boot for which we can specify the version.
 
 When we click on "Switch to the full version" we get more options to bundle into our API. A lot of these options come in handy when building Microservices such as "Cloud Config" and "Cloud Discovery" sections.
@@ -62,34 +63,6 @@ MySQL which will help us connect to our MySQL database,
 JPA which is the Java Persistence API to meet our database interaction needs, and
 Actuator to help us maintain and monitor our web application.
 With the dependencies set, we click the "Generate Project" button to get a zip containing our boilerplate code.
-
-
-Let us identify what comes in the package using the tree command:
-
-$ tree .
-.
-├── HELP.md
-├── mvnw
-├── mvnw.cmd
-├── pbcopy
-├── pom.xml
-└── src
-    ├── main
-    │   ├── java
-    │   │   └── com
-    │   │       └── example
-    │   │           └── cars
-    │   │               └── CarsApplication.java
-    │   └── resources
-    │       ├── application.properties
-    │       ├── static
-    │       └── templates
-    └── test
-        └── java
-            └── com
-                └── example
-                    └── cars
-                        └── CarsApplicationTests.java
                         
 At the root folder, there is a pom.xml file that contains the project configuration for our Spring Boot API. If we used Gradle, we would have a build.gradle file instead. It includes information such as the details of our new API and all its dependencies.
 
@@ -110,18 +83,21 @@ Configuration files make it easy for us to switch such details making our API ea
 
 To enable our JPA dependency to access and modify our database, we modify the configuration file by adding the properties:
 
-### Database Properties
+#### Database Properties
+
 spring.datasource.url = jdbc:mysql://localhost:3306/cars_database?useSSL=false
+
 spring.datasource.username = root
+
 spring.datasource.password = password
 
-### Hibernate Properties
+#### Hibernate Properties
 
-### The SQL dialect makes Hibernate generate better SQL for the chosen database
+The SQL dialect makes Hibernate generate better SQL for the chosen database
 
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
 
-### Hibernate ddl auto (create, create-drop, validate, update)
+Hibernate ddl auto (create, create-drop, validate, update)
 
 spring.jpa.hibernate.ddl-auto = update
 
@@ -133,38 +109,10 @@ GET which is a read operation that only fetches the specified data,
 POST which enables the creation of resources by supplying their information as part of the request,
 PUT which allows us to modify a resource, and
 DELETE which we use to remove a resource and its information from our API.
+
 To better organize our code, we will introduce some more folders in our project at the src/main/java/com/example/cars/ level. We will add a folder called models to host the classes that define our objects.
 
-The other folders to be added include a controllers folder that contains our controllers, a repository folder for the database management classes and a utils folder for any helper classes we might need to add to our project. The resulting folder structure will be:
-
-$ tree .
-.
-├── HELP.md
-├── mvnw
-├── mvnw.cmd
-├── pbcopy
-├── pom.xml
-└── src
-    ├── main
-    │   ├── java
-    │   │   └── com
-    │   │       └── example
-    │   │           └── cars
-    │   │               ├── CarsApplication.java
-    │   │               ├── controllers
-    │   │               ├── models
-    │   │               ├── repository
-    │   │               └── utils
-    │   └── resources
-    │       ├── application.properties
-    │       ├── static
-    │       └── templates
-    └── test
-        └── java
-            └── com
-                └── example
-                    └── cars
-                        └── CarsApplicationTests.java
+The other folders to be added include a controllers folder that contains our controllers, a repository folder for the database management classes and a utils folder for any helper classes we might need to add to our project. 
 
 
 ### Domain Model
@@ -352,6 +300,9 @@ The passing tests show us that we have implemented the functionality as desired 
 Let us interact with our API via Postman, which is a tool that helps interact with APIs when developing or consuming them.
 
 We start by fetching all the cars we have stored in our database:
+
+![Image of Yaktocat]
+(https://octodex.github.com/images/yaktocat.png)
 
 We start by fetching all the cars we have stored in our database:
 
