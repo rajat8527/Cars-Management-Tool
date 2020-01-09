@@ -40,7 +40,7 @@ mvn spring-boot:run
 http://localhost:8080/swagger-ui.html
 ```
 
-# Project Architecture
+## Project Architecture
 
 Let us assume that we are building an app that helps users maintain a list of their cars. They will be able to add new cars, update existing cars, and even remove cars that they no longer possess. This application will be available for both Android and iOS devices and also as a web application.
 
@@ -110,17 +110,18 @@ Configuration files make it easy for us to switch such details making our API ea
 
 To enable our JPA dependency to access and modify our database, we modify the configuration file by adding the properties:
 
-# Database Properties
+### Database Properties
 spring.datasource.url = jdbc:mysql://localhost:3306/cars_database?useSSL=false
 spring.datasource.username = root
 spring.datasource.password = password
 
-# Hibernate Properties
+### Hibernate Properties
 
-# The SQL dialect makes Hibernate generate better SQL for the chosen database
+### The SQL dialect makes Hibernate generate better SQL for the chosen database
+
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
 
-# Hibernate ddl auto (create, create-drop, validate, update)
+### Hibernate ddl auto (create, create-drop, validate, update)
 
 spring.jpa.hibernate.ddl-auto = update
 
@@ -166,7 +167,7 @@ $ tree .
                         └── CarsApplicationTests.java
 
 
-# Domain Model
+### Domain Model
 
 Let us define our Car class in the models folder:
 
@@ -193,7 +194,7 @@ public class Car {
 
 Note: I have stripped off the imports to make the code snippet shorter. Please refer to the Github repo attached at the end of the article for the full code.
 
-# DAO
+### DAO
 
 With our car model ready, let us now create the CarRepository file that will be used in the interaction with the database:
 
@@ -269,7 +270,7 @@ In TDD, we write tests first, run them to ensure they initially fail, then imple
 
 TDD is an iterative process of writing tests and implementing the functionality to make the tests pass. If we introduce any changes in the future, we will write the tests first, then implement the changes to make the new tests pass.
 
-# Controller
+### Controller
 
 Let us now implement our API functionality in a CarController which goes into the controllers folder:
 
@@ -345,7 +346,8 @@ We can also have a single endpoint that handles various HTTP Methods:
 @RequestMapping(value="/cars", method = { RequestMethod.GET, RequestMethod.POST })
 Now that we have implemented the functionality, let us run our tests:
 
-Test results
+### Test results
+
 The passing tests show us that we have implemented the functionality as desired when writing the tests and our API works.
 
 Let us interact with our API via Postman, which is a tool that helps interact with APIs when developing or consuming them.
