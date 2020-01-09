@@ -147,7 +147,9 @@ Note: I have stripped off the imports to make the code snippet shorter. Please r
 With our car model ready, let us now create the CarRepository file that will be used in the interaction with the database:
 
 public interface CarRepository extends JpaRepository<Car, Long> { }
-Writing Tests
+
+### Writing Tests
+
 We can now expose the functionality of our API through our controller, but in the spirit of Test-Driven Development (TDD), let us write the tests first in the CarsApplicationTests file:
 
 // These are a subset of the tests, the full test file is available on the Github repo attached at the end of this article
@@ -301,21 +303,23 @@ Let us interact with our API via Postman, which is a tool that helps interact wi
 
 We start by fetching all the cars we have stored in our database:
 
-![Image of Yaktocat]
-(https://octodex.github.com/images/yaktocat.png)
+![Test Result 1](/images/test-result-1.png)
+Format: ![Alt Text](https://i.ibb.co/GxJMvqN/test1.png)
 
-We start by fetching all the cars we have stored in our database:
-
-Get cars empty
 At the start, we have no cars stored. Let us add our first car:
 
-Post first car
+![Test Result 2](/images/test-result-2.png)
+Format: ![Alt Text](https://i.ibb.co/q1tz14J/test2.png)
+
 The response is the id and details of the car we have just added. If we add some more cars and fetch all the cars we have saved:
 
-Get all cars
+![Test Result 3](/images/test-result-3.png)
+Format: ![Alt Text](https://i.ibb.co/RjFyqGs/test3.png)
+
 These are the cars we have created using our Spring Boot API. A quick check on the database returns the same list:
 
-Database all cars
+![Test Result 4](/images/test-result-4.png)
+Format: ![Alt Text](https://i.ibb.co/N3qf3y8/test4.png)
 
 ### Swagger UI
 
@@ -401,7 +405,8 @@ In our case, we will also be using the Car class to format and validate our requ
     
 That's it! Our documentation is ready. When we run our API using mvn spring-boot:run and navigate to http://localhost:8080/swagger-ui.html we can see our API's documentation:
 
-### Swagger UI final
+![Swagger](/images/swagger.png)
+Format: ![Alt Text](https://i.ibb.co/3SvNrLz/swagger1.png)
 
 Swagger UI has documented all our endpoints and even provided functionality to interact with our API directly from the documentation. As can be seen on the lower right section of the screenshot, our example values have been pre-filled so that we can quickly test out the API without having to rewrite the values.
 
