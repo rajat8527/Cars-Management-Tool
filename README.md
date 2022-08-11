@@ -42,9 +42,7 @@ http://localhost:8080/swagger-ui.html
 
 ## Project Architecture
 
-Let us assume that we are building an app that helps users maintain a list of their cars. They will be able to add new cars, update existing cars, and even remove cars that they no longer possess. This application will be available for both Android and iOS devices and also as a web application.
-
-Using the Spring Boot Framework, we can build a single API that can serve all the three applications, or clients, simultaneously.
+Let us assume that we are building an app that helps users maintain a list of their cars. They will be able to add new cars, update existing cars, and even remove cars that they no longer possess.
 
 Our journey starts at the Spring Initializer tool that helps us quickly bootstrap our Spring Boot API in a matter of minutes. There are a lot of dependencies and packages that help us achieve various functionality in our APIs and the Spring Initializer tool helps integrate them in our starter project.
 
