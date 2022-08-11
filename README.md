@@ -1,6 +1,6 @@
-# Spring Boot Test Driven Development (Cars API)
+# Cars Management Tool
 
-Spring Boot Test Driven Development (REST API Project with Test Cases)
+A small Spring Boot application that allows you to manage cars using REST APIs.
 
 ## Getting Started
 
